@@ -13,11 +13,11 @@ def play_round(guess):
     global attempts
     try:
         guess = int(guess)
-        attempts += 1
-
-        if guess < 1 or guess > 100:
+        if not 1 <= guess <= 100:
             return "Будь ласка, введіть число в межах вказаного діапазону."
-        elif guess < secret_number:
+
+        attempts += 1
+        if guess < secret_number:
             return "Загадане число більше."
         elif guess > secret_number:
             return "Загадане число менше."
@@ -27,10 +27,8 @@ def play_round(guess):
     except ValueError:
         return "Будь ласка, введіть ціле число."
 
-def get_scores_table():
-    database.load_scores()
-    sorted_scores = sorted(database.scores)
-    table = []
-    for i, score in enumerate(sorted_scores, start=1):
-        table.append([i, score])
-    return table
+def hint():
+    if secret_number % 2 == 0:
+        return "Підказка: Загадане число парне."
+    else:
+        return "Підказка: Загадане число непарне."
